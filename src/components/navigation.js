@@ -43,6 +43,7 @@ const Navigation = ({ logo, logoLink, cartLink }) => {
   const { categories, loading, error } = useSelector(
     (state) => state.categoriesList
   );
+  const { cartItems } = useSelector((state) => state.shoppingCart);
   const hasCategories = !(loading || error);
 
   const handleToggle = () => {
@@ -75,7 +76,7 @@ const Navigation = ({ logo, logoLink, cartLink }) => {
 
   return (
     <React.Fragment>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             ref={anchorRef}
@@ -136,7 +137,7 @@ const Navigation = ({ logo, logoLink, cartLink }) => {
             </Link>
           </Typography>
           <IconButton color="inherit" component={Link} to={cartLink}>
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={cartItems.length} color="secondary">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>

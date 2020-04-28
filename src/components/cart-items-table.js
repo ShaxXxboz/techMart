@@ -1,25 +1,40 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import {
+  productAddedToCart,
+  productRemovedFromCart,
+  allProductsRemovedFromCart,
+} from "../actions";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  orderTotal: {
+    marginTop: "1em",
+    textAlign: "right",
+  },
 });
 
 const CartItemsTable = () => {
   const classes = useStyles();
-  const { cartItems } = useSelector((state) => state.shoppingCart);
-
-  console.log(cartItems);
+  const { cartItems, orderTotal } = useSelector((state) => state.shoppingCart);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -30,7 +45,7 @@ const CartItemsTable = () => {
               <TableCell>#</TableCell>
               <TableCell>Product</TableCell>
               <TableCell align="right">Count</TableCell>
-              <TableCell align="right">Total Price</TableCell>
+              <TableCell align="right">Price</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -43,12 +58,34 @@ const CartItemsTable = () => {
                 <TableCell>{title}</TableCell>
                 <TableCell align="right">{count}</TableCell>
                 <TableCell align="right">${total}</TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    color="primary"
+                    onClick={() => dispatch(productAddedToCart(id))}
+                  >
+                    <AddCircleIcon />
+                  </IconButton>
+                  <IconButton
+                    color="default"
+                    onClick={() => dispatch(productRemovedFromCart(id))}
+                  >
+                    <RemoveCircleIcon />
+                  </IconButton>
+                  <IconButton
+                    color="secondary"
+                    onClick={() => dispatch(allProductsRemovedFromCart(id))}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Typography variant="h6" className={classes.orderTotal}>
+        Total: ${orderTotal}
+      </Typography>
     </>
   );
 };

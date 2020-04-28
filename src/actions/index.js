@@ -48,12 +48,41 @@ const allProductsRemovedFromCart = (productId) => {
   };
 };
 
+const cartCleared = () => {
+  return {
+    type: "CART_CLEARED",
+  };
+};
+
 const fetchData = (apiService, dispatch, model) => {
   dispatch(dataRequested(model));
   apiService
     .getModelData(model)
     .then((data) => dispatch(dataLoaded(data, model)))
     .catch((err) => dispatch(dataError(err, model)));
+};
+
+const formInputChanged = (field, value) => {
+  return {
+    type: "FORM_FIELD_CHANGED",
+    payload: { field, value },
+  };
+};
+
+const formCleared = () => {
+  return {
+    type: "FORM_CLEARED",
+  };
+};
+
+const formSubmitted = (apiService, dispatch, data) => {
+  apiService
+    .sendRequest(data)
+    //then clear the cart and form
+    .then(() => {
+      dispatch(cartCleared());
+      dispatch(formCleared());
+    });
 };
 
 export {
@@ -63,5 +92,9 @@ export {
   productAddedToCart,
   productRemovedFromCart,
   allProductsRemovedFromCart,
+  cartCleared,
+  formCleared,
   fetchData,
+  formInputChanged,
+  formSubmitted,
 };

@@ -1,7 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { HomePage, CartPage, ProductsPage } from "./pages";
+import {
+  HomePage,
+  CartPage,
+  ProductsPage,
+  CheckoutPage,
+  NotFoundPage,
+} from "./pages";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -9,7 +15,6 @@ import Footer from "./footer";
 import Navigation from "./navigation";
 import { apiServiceContext } from "./contexts";
 import { fetchData } from "../actions";
-import { capitalize } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   mainContent: {
-    margin: theme.spacing(5),
+    marginTop: theme.spacing(13),
+    marginBottom: theme.spacing(10),
   },
 }));
 
@@ -42,14 +48,18 @@ const App = () => {
     <div className={classes.root}>
       <CssBaseline />
       <Navigation logo="techMart" logoLink="/" cartLink="/cart" />
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <main className={classes.mainContent}>
           <Switch>
             <Route path="/" component={HomePage} exact />
             <Route path="/cart" component={CartPage} />
+            <Route path="/checkout" component={CheckoutPage} />
+            {/* Check if got categories from server
+                If yes display the menu */}
             {hasCategories
-              ? categories.map(({ url, id, title }) => (
+              ? categories.map(({ url, id, title }, idx) => (
                   <Route
+                    key={idx}
                     path={url}
                     exact
                     render={(props) => (
@@ -62,6 +72,7 @@ const App = () => {
                   />
                 ))
               : null}
+            <Route render={NotFoundPage} />
           </Switch>
         </main>
       </Container>

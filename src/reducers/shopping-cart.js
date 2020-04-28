@@ -24,7 +24,7 @@ const updateCartItem = (product, item = {}, quantity) => {
 const updateOrder = (state, productId, quantity) => {
   const {
     productList: { products },
-    shoppingCart: { cartItems },
+    shoppingCart: { cartItems, orderTotal },
   } = state;
 
   const product = products.find(({ id }) => id === productId);
@@ -33,7 +33,7 @@ const updateOrder = (state, productId, quantity) => {
 
   const newItem = updateCartItem(product, item, quantity);
   return {
-    orderTotal: 0,
+    orderTotal: orderTotal + product.price * quantity,
     cartItems: updateCartItems(cartItems, newItem, itemIndex),
   };
 };
@@ -50,7 +50,7 @@ const updateShoppingCart = (state, action) => {
     case "PRODUCT_ADDED_TO_CART":
       return updateOrder(state, action.payload, 1);
 
-    case "PRODUCTt_REMOVED_FROM_CART":
+    case "PRODUCT_REMOVED_FROM_CART":
       return updateOrder(state, action.payload, -1);
 
     case "ALL_PRODUCTS_REMOVED_FROM_CART":
@@ -58,7 +58,11 @@ const updateShoppingCart = (state, action) => {
         ({ id }) => id === action.payload
       );
       return updateOrder(state, action.payload, -item.count);
-
+    case "CART_CLEARED":
+      return {
+        cartItems: [],
+        orderTotal: 0,
+      };
     default:
       return state.shoppingCart;
   }
