@@ -8,7 +8,7 @@ export default class ApiService {
   };
 
   sendRequest = async (body) => {
-    /*  a
+    /*  
    Send post request with data to the server
 
    let res = await axios.post(`${url}`, {
@@ -24,13 +24,13 @@ export default class ApiService {
     switch (model) {
       case "categories": {
         const res = await this.getResponse(
-          `http://www.mocky.io/v2/5ea5f68a320000b75aac2873`
+          `https://5ea845bf35f3720016608ca4.mockapi.io/api/categories`
         );
         return res.data;
       }
       case "products": {
         const res = await this.getResponse(
-          `http://www.mocky.io/v2/5ea5f07f3200005b00ac286a`
+          `https://5ea845bf35f3720016608ca4.mockapi.io/api/products`
         );
         return res.data;
       }

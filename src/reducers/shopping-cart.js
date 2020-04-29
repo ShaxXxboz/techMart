@@ -32,14 +32,20 @@ const updateOrder = (state, productId, quantity) => {
   const item = cartItems[itemIndex];
 
   const newItem = updateCartItem(product, item, quantity);
-  return {
+  const updatedShoppingCart = {
     orderTotal: orderTotal + product.price * quantity,
     cartItems: updateCartItems(cartItems, newItem, itemIndex),
   };
+  sessionStorage.setItem("cartItems", JSON.stringify(updatedShoppingCart));
+  return updatedShoppingCart;
 };
 
 const updateShoppingCart = (state, action) => {
   if (state === undefined) {
+    const storage = sessionStorage.getItem("cartItems");
+    if (storage) {
+      return JSON.parse(storage);
+    }
     return {
       cartItems: [],
       orderTotal: 0,

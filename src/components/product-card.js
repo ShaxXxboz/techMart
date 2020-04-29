@@ -43,12 +43,12 @@ const ProductCard = ({ product }) => {
       <CardActionArea className={classes.cardActionArea}>
         <CardMedia className={classes.media} image={image} />
         <CardContent className={classes.productTitle}>
-          <Typography gutterBottom variant="span">
+          <Typography gutterBottom variant="body1">
             {title}
           </Typography>
         </CardContent>
         <CardContent className={classes.productPrice}>
-          <Typography gutterBottom variant="span">
+          <Typography gutterBottom variant="body2">
             ${price}
           </Typography>
         </CardContent>
