@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Footer from "./footer";
-import Navigation from "./navigation";
+import Header from "./header";
 import { apiServiceContext } from "./contexts";
 import { fetchData } from "../actions";
 
@@ -47,7 +47,7 @@ const App = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Navigation logo="techMart" logoLink="/" cartLink="/cart" />
+      <Header logo="techMart" logoLink="/" cartLink="/cart" />
       <Container maxWidth="md">
         <main className={classes.mainContent}>
           <Switch>
