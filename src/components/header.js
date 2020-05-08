@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navigation = ({ logo, logoLink, cartLink }) => {
+const Header = ({ logo, logoLink, cartLink }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -147,9 +147,4 @@ const Navigation = ({ logo, logoLink, cartLink }) => {
   );
 };
 
-Navigation.propTypes = {
-  categories: PropTypes.array,
-  title: PropTypes.string,
-};
-
-export default Navigation;
+export default Header;
